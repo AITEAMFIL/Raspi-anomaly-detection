@@ -1,12 +1,23 @@
-from sklearn.neural_network import MLPClassifier
 import pandas as pd 
+import numpy as np
 
-traindata = pd.read_excel('traindata.xlsx', header= None, usecols= 'A:V')
 testdata = pd.read_excel('testdata.xlsx', header= None, usecols='A:V')
-train_labels = pd.read_excel('traindata.xlsx', header = None, usecols= 'W')
 test_labels = pd.read_excel('testdata.xlsx', header = None, usecols= 'W')
-mlp = MLPClassifier(hidden_layer_sizes=(20,15,12,10), activation='relu', solver='adam', max_iter=500)
-# print(test_labels.shape)
-mlp.fit(traindata, train_labels)
-print(mlp.score(testdata,test_labels))
-print(mlp.coefs_)
+# print(mlp.coefs_)
+# print(type(mlp.coef))
+
+W = []
+b = []
+for i in range(5):
+    W.append(np.loadtxt('mlpcoefs{0}{1}.csv'.format(i + 1,i + 2),delimiter=','))
+    k = np.loadtxt('mlpbias{0}{1}.csv'.format(i + 1, i + 2), delimiter=',')
+    # print(k.shape)
+    k = k.reshape((k.shape[0],1))
+    b.append(k)
+    # b[-1] = k
+A = [testdata.to_numpy()]
+for i in range(5):
+    A.append(A[i].dot(W[i]) + b[i].reshape((b[i].shape[0],)))
+    A[-1] = np.maximum(0, A[-1])
+test_labels = test_labels.to_numpy()
+print(np.mean(np.expand_dims(np.argmax(A[-1],axis=1),1) == test_labels))

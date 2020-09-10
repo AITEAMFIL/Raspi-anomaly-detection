@@ -127,8 +127,10 @@ def softmax(V):
 def convert_labels(y, C):
     Y = sparse.coo_matrix((np.ones_like(y), (y, np.arange(len(y)))), shape = (C, len(y))).toarray()
     return Y
+
 def cost(Y, Yhat):
     return -np.sum(Y*np.log(Yhat))/Y.shape[0]
+    
 for h in range(44, 47):
     d0 = 37
     reduced_d0 = 6
