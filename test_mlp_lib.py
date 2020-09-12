@@ -1,6 +1,6 @@
 import pandas as pd 
 import numpy as np
-
+NUM_HIDDEN_LAYER = 1
 testdata = pd.read_excel('testdata.xlsx', header= None, usecols='A:V')
 test_labels = pd.read_excel('testdata.xlsx', header = None, usecols= 'W')
 # print(mlp.coefs_)
@@ -8,7 +8,7 @@ test_labels = pd.read_excel('testdata.xlsx', header = None, usecols= 'W')
 
 W = []
 b = []
-for i in range(5):
+for i in range(NUM_HIDDEN_LAYER):
     W.append(np.loadtxt('mlpcoefs{0}{1}.csv'.format(i + 1,i + 2),delimiter=','))
     k = np.loadtxt('mlpbias{0}{1}.csv'.format(i + 1, i + 2), delimiter=',')
     # print(k.shape)
