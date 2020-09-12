@@ -1,4 +1,4 @@
-import pandas as pd 
+import pandas as pd
 import numpy as np
 NUM_HIDDEN_LAYER = 1
 testdata = pd.read_excel('testdata.xlsx', header= None, usecols='A:V')
@@ -16,7 +16,7 @@ for i in range(NUM_HIDDEN_LAYER):
     b.append(k)
     # b[-1] = k
 A = [testdata.to_numpy()]
-for i in range(5):
+for i in range(2):
     A.append(A[i].dot(W[i]) + b[i].reshape((b[i].shape[0],)))
     A[-1] = np.maximum(0, A[-1])
 test_labels = test_labels.to_numpy()
